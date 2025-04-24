@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,32 +13,18 @@
     <p>
         Write JavaScript code to process the provided <code>gradebook</code> variable to answer the questions below.
         Log each of the answers to the console.
-
-        <ol type="A">
-            <li>Display the date this data was downloaded (i.e. "2021-06-05").</li>
-            <li>Display the number of students in the gradebook (i.e. 10).</li>
-            <li>Loop through each student and display their name and grade, each on a new line.</li>
-            <li>Use a mapping operation to arrive at an array of just the numeric grades, store the array of numbers in a new variable called <code>grades</code>, and display it.</li>
-            <li>Using the array of grades from Question D, calculate and display the average grade (i.e. 83.64).</li>
-            <li>Using the array of grades from Question D, calculate and display the median grade (i.e. 87.6).</li>
-        </ol>
-
-        <strong>HINT:</strong> for questions E and F, use the <code>d3-array</code> library.
     </p>
-
 
     <hr>
     <h2>Part 2</h2>
     <p>
         Write JavaScript to programmatically populate the provided <code>table</code> element with the gradebook data.
-        Specifically the table should contain an initial header row of the column names (i.e. "Student ID", "Student Name", and "Final Grade"),
-        followed by a row for each student in the gradebook.
     </p>
 
-    <table id="display-gradebook">
+    <!-- JavaScript code created with assistance from ChatGPT -->
+     
+    <table id="display-gradebook" border="1" cellpadding="8">
     </table>
-
-
 
     <script src="https://d3js.org/d3-array.v2.min.js"></script>
     <script type="text/javascript">
@@ -47,7 +32,7 @@
         var gradebook = {
             "downloadDate": "2021-06-05",
             "professorId": 123,
-            "students":[
+            "students": [
                 {"studentId": 1, "name": "Student 1", "finalGrade": 76.7},
                 {"studentId": 2, "name": "Student 2", "finalGrade": 85.1},
                 {"studentId": 3, "name": "Student 3", "finalGrade": 50.3},
@@ -64,20 +49,66 @@
         console.log("---------------------")
         console.log("PART 1...")
 
+        // A. Display download date
+        console.log("A. Download Date:", gradebook.downloadDate);
 
+        // B. Number of students
+        console.log("B. Number of Students:", gradebook.students.length);
 
+        // C. Loop through students and display name + grade
+        console.log("C. Students & Grades:");
+        gradebook.students.forEach(function(student) {
+            console.log(student.name + ": " + student.finalGrade);
+        });
 
+        // D. Array of numeric grades
+        var grades = gradebook.students.map(function(student) {
+            return student.finalGrade;
+        });
+        console.log("D. Grades Array:", grades);
 
+        // E. Average grade
+        var avg = d3.mean(grades);
+        console.log("E. Average Grade:", avg.toFixed(2));
+
+        // F. Median grade
+        var median = d3.median(grades);
+        console.log("F. Median Grade:", median.toFixed(2));
 
         console.log("---------------------")
         console.log("PART 2...")
 
+        // Select the table
+        var table = document.getElementById("display-gradebook");
 
+        // Create header row
+        var headerRow = document.createElement("tr");
+        ["Student ID", "Student Name", "Final Grade"].forEach(function(col) {
+            var th = document.createElement("th");
+            th.innerText = col;
+            headerRow.appendChild(th);
+        });
+        table.appendChild(headerRow);
 
+        // Create a row for each student
+        gradebook.students.forEach(function(student) {
+            var row = document.createElement("tr");
 
+            var tdId = document.createElement("td");
+            tdId.innerText = student.studentId;
+            row.appendChild(tdId);
 
+            var tdName = document.createElement("td");
+            tdName.innerText = student.name;
+            row.appendChild(tdName);
+
+            var tdGrade = document.createElement("td");
+            tdGrade.innerText = student.finalGrade;
+            row.appendChild(tdGrade);
+
+            table.appendChild(row);
+        });
 
     </script>
-
 </body>
 </html>

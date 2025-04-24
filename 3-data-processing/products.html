@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,29 +11,18 @@
 
     <h2>Part 1</h2>
     <p>
-        Write JavaScript code to process the provided <code>products</code> variable to answer the questions below.
-        Log each of the answers to the console.
-
-        <ol type="A">
-            <li>Display the total number of products (i.e. 3).</li>
-            <li>Loop through each product and display their name and price, each on a new line.</li>
-            <li>Use a filter operation to arrive at an array containing just the products that have a price less than $50, and store them in a new variable called <code>matchingProducts</code>.</li>
-            <li>Display the total number of matching products from Question C (i.e. 2).</li>
-        </ol>
+        JavaScript code to process the <code>products</code> variable and answer questions below.
     </p>
 
     <hr>
     <h2>Part 2</h2>
     <p>
-        Write JavaScript to programmatically populate the provided <code>div</code> element with information about each product.
-        Specifically, the top-level <code>div</code> should contain a new child <code>div</code> element for each product (i.e. the product-specific <code>div</code>).
-        Each product-specific <code>div</code> element should contain separate <code>p</code> tags to display the product's name, description, and price, respectively;
-        as well as an <code>img</code> tag to display the image of that product;
-        and finally a <code>hr</code> element to produce a horizontal line separator between each of the products.
+        Populate the <code>div</code> element with name, description, price, image, and a horizontal separator for each product.
     </p>
 
-    <div id="display-products"></div>
+    <!-- JavaScript code created with assistance from ChatGPT -->
 
+    <div id="display-products"></div>
 
     <script type="text/javascript">
 
@@ -57,21 +45,65 @@
                 "price": 4.99,
                 "imageURL": "https://picsum.photos/id/1080/360/200"
             }
-        ]
+        ];
 
-        console.log("---------------------")
-        console.log("PART 1...")
+        console.log("---------------------");
+        console.log("PART 1...");
 
+        // A. Total number of products
+        console.log("A. Total Products:", products.length);
 
+        // B. Display each product's name and price
+        console.log("B. Product Name & Price:");
+        products.forEach(function(product) {
+            console.log(product.name + " - $" + product.price.toFixed(2));
+        });
 
+        // C. Filter products with price < $50
+        var matchingProducts = products.filter(function(product) {
+            return product.price < 50;
+        });
+        console.log("C. Matching Products:", matchingProducts);
 
+        // D. Total number of matching products
+        console.log("D. Matching Count:", matchingProducts.length);
 
+        console.log("---------------------");
+        console.log("PART 2...");
 
-        console.log("---------------------")
-        console.log("PART 2...")
+        var container = document.getElementById("display-products");
 
+        products.forEach(function(product) {
+            // Create container div
+            var div = document.createElement("div");
 
+            // Name
+            var nameP = document.createElement("p");
+            nameP.textContent = "Name: " + product.name;
+            div.appendChild(nameP);
 
+            // Description
+            var descP = document.createElement("p");
+            descP.textContent = "Description: " + product.description;
+            div.appendChild(descP);
+
+            // Price
+            var priceP = document.createElement("p");
+            priceP.textContent = "Price: $" + product.price.toFixed(2);
+            div.appendChild(priceP);
+
+            // Image
+            var img = document.createElement("img");
+            img.src = product.imageURL;
+            img.alt = product.name;
+            div.appendChild(img);
+
+            // Separator
+            var hr = document.createElement("hr");
+            div.appendChild(hr);
+
+            container.appendChild(div);
+        });
 
     </script>
 </body>

@@ -59,27 +59,58 @@
         and format the tax rate as a percentage (using the function from Part 2).
     </p>
 
+    <!-- JavaScript code created with assistance from ChatGPT -->
 
     <script type="text/javascript">
 
         console.log("---------------------")
         console.log("PART 1...")
+        function formatUSD(price) {
+            return `$${price.toFixed(2)}`;}
 
-
-
+        let price = 4.6777;
+        console.log("Formatted Price:", formatUSD(price));
 
         console.log("---------------------")
         console.log("PART 2...")
 
+        function formatPct(percentage) {
+            return `${(percentage * 100).toFixed(2)}%`;}
 
-
-
+        let percentage = 0.0875;
+        console.log("Formatted Percentage:", formatPct(percentage));
 
         console.log("---------------------")
         console.log("PART 3...")
 
+        let subtotal = 19.41;
+        let taxRate = 0.0875;
+        let tax = subtotal * taxRate;
+        let total = subtotal + tax;
 
+        console.log("Subtotal:", formatUSD(subtotal));
+        console.log("Tax Rate:", formatPct(taxRate));
+        console.log("Tax Owed:", formatUSD(tax));
+        console.log("Total:", formatUSD(total));
 
+        console.log("---------------------")
+        console.log("PART 4...")
+
+        function generateReceipt(subtotal, taxRate = 0.0875) {
+            let tax = subtotal * taxRate;
+            let total = subtotal + tax;
+            return {
+                subtotal: subtotal,
+                taxRate: taxRate,
+                tax: tax,
+                total: total  };  }
+
+        let receipt = generateReceipt(19.41);
+
+        console.log("Receipt Subtotal:", formatUSD(receipt.subtotal));
+        console.log("Receipt Tax Rate:", formatPct(receipt.taxRate));
+        console.log("Receipt Tax:", formatUSD(receipt.tax));
+        console.log("Receipt Total:", formatUSD(receipt.total));
 
     </script>
 </body>

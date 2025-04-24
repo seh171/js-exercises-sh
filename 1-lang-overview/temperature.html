@@ -58,6 +58,7 @@
     <label>Fahrenheit Temperature:</label>
     <span id="display-temp-f">TODO</span>
 
+    <!-- JavaScript code created with assistance from ChatGPT -->
 
     <script type="text/javascript">
 
@@ -65,23 +66,34 @@
         console.log("PART 1...")
 
 
+        let tempC = -270;
+        let tempF = (9/5) * tempC + 32;
 
+        console.log("Celsius:", tempC);
+        console.log("Fahrenheit:", tempF);
 
 
         console.log("---------------------")
         console.log("PART 2...")
 
+        function calculateTemp(tempC) {
+            return (9/5) * tempC + 32;
+        }
 
-
-
+        let resultF = calculateTemp(-270);
+        console.log("Celsius:", -270);
+        console.log("Fahrenheit:", resultF);
 
 
         console.log("---------------------")
         console.log("PART 3...")
 
-
-
-
+        document.getElementById("calculate").addEventListener("click", function() {
+            let input = document.getElementById("input-temp-c");
+            let tempC = parseFloat(input.value);
+            let tempF = calculateTemp(tempC);
+            document.getElementById("display-temp-f").textContent = tempF.toFixed(2);
+        });
 
     </script>
 </body>

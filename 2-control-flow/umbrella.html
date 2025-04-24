@@ -65,30 +65,53 @@
     <label>Message:</label>
     <span id="display-message">TODO</span>
 
+<!-- JavaScript code created with assistance from ChatGPT -->
 
-    <script type="text/javascript">
+<script type="text/javascript">
+    console.log("---------------------")
+    console.log("PART 1...")
 
-        console.log("---------------------")
-        console.log("PART 1...")
+    let isRaining = true;
+    let ownsUmbrella = false;
 
+    console.log("Is Raining:", isRaining);
+    console.log("Owns Umbrella:", ownsUmbrella);
 
+    if (!isRaining) {
+        console.log("Skies are clear");
+    } else {
+        if (ownsUmbrella) {
+            console.log("Bring your umbrella");
+        } else {
+            console.log("Buy an umbrella");
+        }
+    }
 
+    console.log("---------------------")
+    console.log("PART 2...")
 
+    function advise(isRaining, ownsUmbrella) {
+        if (!isRaining) {
+            return "Skies are clear";
+        } else {
+            return ownsUmbrella ? "Bring your umbrella" : "Buy an umbrella";
+        }
+    }
 
-        console.log("---------------------")
-        console.log("PART 2...")
+    console.log(advise(false, false)); // Skies are clear
+    console.log(advise(false, true));  // Skies are clear
+    console.log(advise(true, false));  // Buy an umbrella
+    console.log(advise(true, true));   // Bring your umbrella
 
+    console.log("---------------------")
+    console.log("PART 3...")
 
-
-
-
-        console.log("---------------------")
-        console.log("PART 3...")
-
-
-
-
-
-    </script>
+    document.getElementById("advise").addEventListener("click", function () {
+        const isRaining = document.getElementById("switch-raining").checked;
+        const ownsUmbrella = document.getElementById("switch-umbrella").checked;
+        const message = advise(isRaining, ownsUmbrella);
+        document.getElementById("display-message").textContent = message;
+    });
+</script>
 </body>
 </html>
