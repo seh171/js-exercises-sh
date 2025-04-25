@@ -1,106 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harry Potter Movies (JSON)</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harry Potter Movies (JSON)</title>
 </head>
 <body>
 
-    <h1>Harry Potter Movies (JSON)</h1>
-    <a href="../index.html">Home</a>
+  <h1>Harry Potter Movies (JSON)</h1>
+  <a href="../index.html">Home</a>
 
-    <h2>Dataset Information</h2>
-    <p>For this exercise, we will use a JSON file called
-        <a href="https://raw.githubusercontent.com/prof-rossetti/internet-technologies/refs/heads/main/data/hp-movies.json">"hp-movies.json"</a>.
-        that has been uploaded to the Internet.
-        The JSON file contains information about Harry Potter movies.
-    </p>
+  <h2>Dataset Information</h2>
+  <p>
+    We will use a JSON file from:
+    <a href="https://raw.githubusercontent.com/prof-rossetti/internet-technologies/main/data/hp-movies.json">
+      hp-movies.json
+    </a>
+  </p>
 
-    <h2>Part 1</h2>
-    <p>
-        Write JavaScript code to answer the questions below.
-        Log each of the answers to the console.
+  <h2>Part 1</h2>
+  <ol type="A">
+    <li>Fetch the movie data using the provided URL.</li>
+    <li>Display the number of movies (i.e. 8).</li>
+    <li>Loop through the movies, and display the title and year of each.</li>
+    <li>Find and display the highest-rated movie.</li>
+  </ol>
 
-        <ol type="A">
-            <li>Fetch the movie data using the provided URL.</li>
-            <li>Display the number of movies (i.e. 8).</li>
-            <li>Loop through the movies, and display the title and year of each.</li>
-            <li>Perform a sorting operation to identify the movie that has the highest rating.
-                Display the name and rating of that movie.
-            </li>
-        </ol>
-    </p>
+  <h2>Part 2</h2>
+  <ol type="A">
+    <li>Dynamically create a dropdown list of movies.</li>
+    <li>Show title, year, rating, and thumbnail when selected.</li>
+    <li>Listen for changes to update the info.</li>
+  </ol>
 
+  <hr />
+  <h2>Display</h2>
+  <select id="select-movie" name="movie">
+    <option value="N/A">Select a Movie</option>
+  </select>
 
-    <h2>Part 2</h2>
-    <p>
-        Write JavaScript code to answer the questions below.
-        Display the answers on the page in the designated areas.
-    </p>
+  <div id="display-movie">
+    <p>Title: <span id="display-title">TODO</span></p>
+    <p>Year: <span id="display-year">TODO</span></p>
+    <p>Rating: <span id="display-rating">X</span> / 10</p>
+    <p>Thumbnail Image:</p>
+    <div id="image-container"></div>
+  </div>
 
-    <ol type="A">
-        <li>See the provided a movie selector dropdown menu (i.e the designated <code>select</code> element).
-            Loop through the movies and dynamically create a new <code>option</code> element for each movie.
-            Use the movie's identifier as the option value, and the movie's title as the option text.
-        </li>
-        <li>Create a function called <code>updateMovieInfo</code>.
-            It should identify what movie is currently selected from the dropdown menu,
-            then lookup the corresponding movie information using a find operation,
-            and finally display information about that movie in the designated areas below.
-            Specifically it should display the movie title, year, rating, and an image of the movie poster.
-        </li>
-        <li>Add an event listener to the dropdown, such that when a new option is selected,
-            it will invoke the <code>updateMovieInfo</code> function.
-            As a result, you should be able to select different movies from the dropdown to see the corresponding info on the page.
-        </li>
+ <!-- JavaScript code created with assistance from ChatGPT -->
 
-    </ol>
+  <script>
+    const requestUrl = "https://raw.githubusercontent.com/prof-rossetti/internet-technologies/main/data/hp-movies.json";
 
-    <hr>
-    <h2>Display</h2>
+    fetch(requestUrl)
+      .then(response => response.json())
+      .then(data => {
+        console.log("DATA", data);
 
-    <select id="select-movie" name="movie">
-        <option value="N/A">Select a Movie</option>
-    </select>
-    <div id="display-movie">
-        <p>Title: <span id="display-title">TODO</span></p>
-        <p>Year: <span id="display-year">TODO</span></p>
-        <p>Rating: <span id="display-rating">X</span> / 10</p>
-        <p>Thumbnail Image:</p>
-        <div id="image-container"></div>
-    </div>
+        console.log("Part 1:");
+        console.log("Number of movies:", data.length);
 
+        data.forEach(movie => {
+          console.log(`${movie["Title"]} (${movie["Year"]})`);
+        });
 
+        const ratedMovies = data.filter(movie => typeof movie["Rating"] === "number");
+        const highestRated = ratedMovies.reduce((best, current) =>
+          current["Rating"] > best["Rating"] ? current : best
+        );
+        console.log("Highest Rated Movie:", highestRated["Title"], "-", highestRated["Rating"]);
 
-    <script src="https://cdn.jsdelivr.net/npm/d3-array@3"></script>
-    <script type="text/javascript">
+        console.log("Part 2:");
 
-        var requestUrl = "https://raw.githubusercontent.com/prof-rossetti/internet-technologies/refs/heads/main/data/hp-movies.json"
+        const select = document.getElementById("select-movie");
 
-        fetch(requestUrl).then(response => response.json())
-            .then(function(data){
-                console.log("DATA", data)
+        data.forEach(movie => {
+          const option = document.createElement("option");
+          option.value = movie["Title"];
+          option.textContent = movie["Title"];
+          select.appendChild(option);
+        });
 
+        function updateMovieInfo() {
+          const selectedTitle = select.value;
+          const selectedMovie = data.find(movie => movie["Title"] === selectedTitle);
 
-                console.log("---------------------")
-                console.log("PART 1...")
+          if (selectedMovie) {
+            document.getElementById("display-title").textContent = selectedMovie["Title"];
+            document.getElementById("display-year").textContent = selectedMovie["Year"];
+            document.getElementById("display-rating").textContent = selectedMovie["Rating"];
 
+            const imgContainer = document.getElementById("image-container");
+            imgContainer.innerHTML = "";
 
+            const img = document.createElement("img");
+            img.src = selectedMovie["Thumbnail Image URL"];
+            img.alt = selectedMovie["Title"] + " poster";
+            img.style.maxWidth = "200px";
+            imgContainer.appendChild(img);
+          }
+        }
 
-
-
-
-                console.log("---------------------")
-                console.log("PART 2...")
-
-
-
-
-
-            })
-            .catch(err => console.log(err))
-
-    </script>
+        select.addEventListener("change", updateMovieInfo);
+      })
+      .catch(error => {
+        console.error("Error loading movie data:", error);
+      });
+  </script>
 </body>
 </html>

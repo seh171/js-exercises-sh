@@ -25,14 +25,12 @@
         <ol type="A">
             <li>Consult the API documentation to learn which URL to use to fetch information about non-alcoholic drinks.
                 Store the URL in a variable called <code>requestURL</code>.
-                <strong>HINT:</strong> ensure your URL begins with "http://" or "https://".
             </li>
             <li>Fetch the data using the specified URL.</li>
             <li>Display the number of non-alcoholic drinks (i.e. 58).</li>
             <li>Loop through the drinks, and display the name and unique identifier of each.</li>
         </ol>
     </p>
-
 
     <h2>Part 2</h2>
     <p>
@@ -48,43 +46,57 @@
             The child <code>div</code> element should contain a <code>p</code> tag to display the drink name,
             and an <code>img</code> tag to display the image (using an image height of 100px).
         </li>
-
     </ol>
 
     <hr>
     <h2>Display</h2>
 
     <p>Drinks: <span id="display-drinks-count">TODO</span></p>
-    <div id="display-drinks">
-    </div>
+    <div id="display-drinks"></div>
 
-
-
+     <!-- JavaScript code created with assistance from ChatGPT -->
 
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script type="text/javascript">
-
-        var requestUrl = "TODO"
+        var requestUrl = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic"
 
         d3.json(requestUrl).then(function(data){
             console.log("DATA:", data)
 
-
             console.log("---------------------")
             console.log("PART 1...")
 
+            var drinks = data.drinks
+            console.log("Number of non-alcoholic drinks:", drinks.length)
 
-
-
+            drinks.forEach(function(drink) {
+                console.log(`${drink.strDrink} (ID: ${drink.idDrink})`)
+            })
 
             console.log("---------------------")
             console.log("PART 2...")
 
+            // A. Display the number of drinks
+            document.getElementById("display-drinks-count").textContent = drinks.length
 
+            // B. Display each drink name and image
+            var displayDiv = document.getElementById("display-drinks")
+            drinks.forEach(function(drink) {
+                var drinkDiv = document.createElement("div")
 
+                var nameP = document.createElement("p")
+                nameP.textContent = drink.strDrink
 
+                var image = document.createElement("img")
+                image.src = drink.strDrinkThumb
+                image.alt = drink.strDrink
+                image.height = 100
+
+                drinkDiv.appendChild(nameP)
+                drinkDiv.appendChild(image)
+                displayDiv.appendChild(drinkDiv)
+            })
         })
-
     </script>
 </body>
 </html>
